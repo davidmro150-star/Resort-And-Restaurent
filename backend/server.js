@@ -51,6 +51,21 @@ app.get('/api/rooms', async (req, res) => {
   }
 });
 
+// Add this inside your backend/server.js right below your room endpoints:
+
+const MenuItem = require('./models/MenuItem'); // 🔌 Import Menu Model at the top if needed
+
+// 🍽️ Restaurant Menu API Endpoint
+app.get('/api/menu', async (req, res) => {
+  try {
+    const menuItems = await MenuItem.find({});
+    res.json(menuItems);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 app.get('/api/rooms/:slug', async (req, res) => {
   try {
     const item = await Room.findOne({ slug: req.params.slug });
